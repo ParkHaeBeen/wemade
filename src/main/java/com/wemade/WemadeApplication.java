@@ -1,4 +1,4 @@
-package com.wemade.wemade;
+package com.wemade;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
