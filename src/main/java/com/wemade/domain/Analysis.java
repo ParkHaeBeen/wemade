@@ -1,17 +1,16 @@
 package com.wemade.domain;
 
+import java.util.UUID;
+
 public class Analysis {
     private final String id;
     private final long createdAt;
     private final AnalysisStatistics statistics = new AnalysisStatistics();
-    private final ParseReport parseReport;
+    private final ParseReport parseReport = new ParseReport();
 
-    public Analysis(String id, long createdAt, int sampleLimit) {
-        if (id == null || id.isBlank()) throw new IllegalArgumentException("id must not be blank");
-        if (createdAt <= 0) throw new IllegalArgumentException("createdAt must be epoch millis");
+    private Analysis(String id, long createdAt) {
         this.id = id;
         this.createdAt = createdAt;
-        this.parseReport = new ParseReport(sampleLimit);
     }
 
     public String getId() { return id; }
@@ -19,4 +18,8 @@ public class Analysis {
 
     public AnalysisStatistics getStatistics() { return statistics; }
     public ParseReport getParseReport() { return parseReport; }
+
+    public static Analysis create() {
+        return new Analysis(UUID.randomUUID().toString(), System.currentTimeMillis());
+    }
 }
