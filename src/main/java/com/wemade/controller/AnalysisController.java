@@ -2,10 +2,10 @@ package com.wemade.controller;
 
 import com.wemade.controller.dto.AnalysisCreateResponse;
 import com.wemade.controller.dto.AnalysisReadResponse;
+import com.wemade.controller.dto.request.AnalysisCreateRequest;
 import com.wemade.service.AnalysisService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/analysis")
@@ -19,9 +19,9 @@ public class AnalysisController {
 
   @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   public AnalysisCreateResponse create(
-          @RequestPart MultipartFile file
+          @RequestPart AnalysisCreateRequest request
   ) {
-    return analysisService.create(file);
+    return analysisService.create(request);
   }
 
   @GetMapping("/{analysisId}")

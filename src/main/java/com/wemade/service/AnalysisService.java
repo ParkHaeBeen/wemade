@@ -2,6 +2,7 @@ package com.wemade.service;
 
 import com.wemade.controller.dto.AnalysisCreateResponse;
 import com.wemade.controller.dto.AnalysisReadResponse;
+import com.wemade.controller.dto.request.AnalysisCreateRequest;
 import com.wemade.domain.Analysis;
 import com.wemade.infrastructure.persistence.AnalysisRepository;
 import org.slf4j.Logger;
@@ -23,14 +24,16 @@ public class AnalysisService {
     this.analysisExecutor = analysisExecutor;
   }
 
-  public AnalysisCreateResponse create(MultipartFile file) {
+  public AnalysisCreateResponse create(AnalysisCreateRequest request) {
+    MultipartFile file = request.file();
     analysisFileValidator.validate(file);
 
-    Analysis analysis = analysisRepository.save(Analysis.create());
+    Analysis analysis = Analysis.create();
     log.info("event=analysis_start analysisId={} filename={} sizeBytes={}",
             analysis.getId(), file.getOriginalFilename(), file.getSize());
 
     analysisExecutor.run(file, analysis);
+    analysisRepository.save(analysis);
 
     return new AnalysisCreateResponse(analysis.getId());
   }
