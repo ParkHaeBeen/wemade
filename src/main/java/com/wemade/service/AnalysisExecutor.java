@@ -23,24 +23,25 @@ public class AnalysisExecutor {
     private static final Logger log = LoggerFactory.getLogger(AnalysisExecutor.class);
     private static final long MAX_LINES = 200_000;
 
-    private final AnalysisParser analysisParser;
-    private final AnalysisLogRowMapper rowMapper = new AnalysisLogRowMapper();
+    private final AnalysisParser parser;
+    private final AnalysisLogRowMapper rowMapper;
 
-    public AnalysisExecutor(AnalysisParser analysisParser) {
-        this.analysisParser = analysisParser;
+    public AnalysisExecutor(AnalysisParser parser, AnalysisLogRowMapper rowMapper) {
+        this.parser = parser;
+        this.rowMapper = rowMapper;
     }
 
     public void run(MultipartFile file, Analysis analysis) {
         long rowNo = 0;
 
-        try (CSVParser parser = CSVFormat.DEFAULT.builder()
+        try (CSVParser csvParser = CSVFormat.DEFAULT.builder()
                 .setHeader()
                 .setSkipHeaderRecord(true)
                 .setTrim(true)
                 .build()
                 .parse(new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8))) {
 
-            for (CSVRecord record : parser) {
+            for (CSVRecord record : csvParser) {
                 rowNo++;
 
                 if (rowNo > MAX_LINES) {
@@ -51,10 +52,9 @@ public class AnalysisExecutor {
                 }
 
                 analysis.getParseReport().addLine();
-
                 try {
                     AnalysisLogRow row = rowMapper.map(record);
-                    ParsedLogLine parsed = analysisParser.parse(row);
+                    ParsedLogLine parsed = parser.parse(row);
                     applyParsedLine(analysis, parsed);
 
                 } catch (ParserException e) {

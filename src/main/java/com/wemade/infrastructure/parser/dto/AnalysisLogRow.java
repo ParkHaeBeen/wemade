@@ -8,9 +8,9 @@ public record AnalysisLogRow(
         String userAgent,
         int httpStatus,
         String httpVersion,
-        long receivedBytes,
-        long sentBytes,
-        long clientResponseTime,
+        String receivedBytes,
+        String sentBytes,
+        String clientResponseTime,
         String sslProtocol,
         String originalRequestUriWithArgs
 ) {
