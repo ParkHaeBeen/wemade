@@ -10,6 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class AnalysisRepository {
     private final ConcurrentHashMap<String, Analysis> store = new ConcurrentHashMap<>();
 
+
     public Analysis save(Analysis analysis) {
         store.put(analysis.getId(), analysis);
         return analysis;

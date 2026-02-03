@@ -23,10 +23,8 @@ public class AnalysisController {
   ) {
     return analysisService.create(file);
   }
-
   @GetMapping("/{analysisId}")
   public AnalysisReadResponse read(@PathVariable String analysisId) {
     return analysisService.read(analysisId);
   }
-
 }
