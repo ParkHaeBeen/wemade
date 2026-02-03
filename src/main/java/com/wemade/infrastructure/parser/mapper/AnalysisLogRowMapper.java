@@ -29,6 +29,7 @@ public class AnalysisLogRowMapper {
         );
     }
 
+
     private String get(CSVRecord record, String key) {
         if (record.isMapped(key)) return record.get(key);
         if (TIME.equals(key) && record.isMapped(TIME_WITH_BOM)) {

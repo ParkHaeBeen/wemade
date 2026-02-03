@@ -1,5 +1,6 @@
 package com.wemade.service;
 
+import com.wemade.common.aop.AnalysisLogging;
 import com.wemade.common.exception.ErrorCode;
 import com.wemade.common.exception.ParserException;
 import com.wemade.domain.Analysis;
@@ -31,6 +32,7 @@ public class AnalysisExecutor {
         this.rowMapper = rowMapper;
     }
 
+    @AnalysisLogging
     public void run(MultipartFile file, Analysis analysis) {
         long rowNo = 0;
 
@@ -59,14 +61,6 @@ public class AnalysisExecutor {
 
                 } catch (ParserException e) {
                     analysis.getParseReport().addError(record.toString());
-
-                    log.warn(
-                            "event=parse_error analysisId={} rowNo={} errorCode={} message={}",
-                            analysis.getId(),
-                            rowNo,
-                            e.getErrorCode().name(),
-                            e.getMessage()
-                    );
                 }
             }
 
@@ -77,20 +71,9 @@ public class AnalysisExecutor {
             analysis.getStatistics().setTotalRequests(totalRequests);
 
         } catch (ParserException e) {
-            log.error(
-                    "event=analysis_failed analysisId={} errorCode={} message={}",
-                    analysis.getId(),
-                    e.getErrorCode().name(),
-                    e.getMessage()
-            );
             throw e;
 
         } catch (Exception e) {
-            log.error(
-                    "event=analysis_failed analysisId={} message={}",
-                    analysis.getId(),
-                    safeMessage(e)
-            );
             throw new ParserException(ErrorCode.PARSE_FAILED, e.getMessage());
         }
     }
@@ -102,10 +85,4 @@ public class AnalysisExecutor {
         analysis.getStatistics().incrementStatus(parsed.statusCode());
         analysis.getStatistics().incrementStatusGroup(parsed.statusCode());
     }
-
-    private static String safeMessage(Exception e) {
-        String msg = e.getMessage();
-        return (msg == null || msg.isBlank()) ? e.getClass().getSimpleName() : msg;
-    }
-
 }
