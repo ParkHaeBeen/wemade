@@ -1,6 +1,5 @@
 package com.wemade.domain;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -13,7 +12,7 @@ public class AnalysisStatistics {
 
     private final Map<String, Long> ipCounts = new ConcurrentHashMap<>();
     private final Map<String, Long> pathCounts = new ConcurrentHashMap<>();
-    private final Map<Integer, Long> statusCounts = new ConcurrentHashMap<>();
+    private final Map<String, Long> statusCounts = new ConcurrentHashMap<>();
 
     public void incrementIp(String value) {
         if (value == null || value.isBlank()) return;
@@ -25,14 +24,13 @@ public class AnalysisStatistics {
         pathCounts.merge(value.trim(), 1L, Long::sum);
     }
 
-    public void incrementStatus(int value) {
+    public void incrementStatus(String value) {
+        if (value == null || value.isBlank()) return;
         statusCounts.merge(value, 1L, Long::sum);
     }
 
-    public void incrementStatusGroup(int statusCode) {
-        if (statusCode < 100 || statusCode >= 600) return;
-
-        int group = statusCode / 100;
+    public void incrementStatusGroup(String statusCode) {
+        int group = Integer.parseInt(statusCode) / 100;
         if (group == 2) success2xx++;
         else if (group == 3) redirect3xx++;
         else if (group == 4) clientError4xx++;
@@ -52,5 +50,5 @@ public class AnalysisStatistics {
 
     public Map<String, Long> getIpCounts() { return ipCounts; }
     public Map<String, Long> getPathCounts() { return pathCounts; }
-    public Map<Integer, Long> getStatusCounts() { return statusCounts; }
+    public Map<String, Long> getStatusCounts() { return statusCounts; }
 }

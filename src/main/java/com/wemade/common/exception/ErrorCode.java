@@ -9,7 +9,9 @@ public enum ErrorCode {
     PARSE_FAILED("failed to parse line"),
     PARSE_INVALID_FORMAT("invalid format"),
 
-    NOT_FOUND("not found");
+    NOT_FOUND("not found"),
+
+    REST_CLIENT_ERROR("failed to connect to remote server");
 
     private final String message;
 

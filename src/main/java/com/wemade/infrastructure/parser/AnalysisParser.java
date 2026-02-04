@@ -11,7 +11,7 @@ public class AnalysisParser {
     public ParsedLogLine parse(AnalysisLogRow row) {
         String ip = row.clientIp();
         String path = row.requestUri();
-        int status = row.httpStatus();
+        String status = row.httpStatus();
 
         if (ip == null || ip.isBlank()) {
             throw new ParserException(

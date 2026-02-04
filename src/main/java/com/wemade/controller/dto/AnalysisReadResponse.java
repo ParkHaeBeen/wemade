@@ -13,7 +13,6 @@ public record AnalysisReadResponse(
         double server5xxRatio,
         List<AnalysisTopItem> topPaths,
         List<AnalysisTopItem> topStatusCodes,
-        List<AnalysisTopItem> topIps
+        List<AnalysisTopIpInfoResponse> topIps
 ) {
-
 }
