@@ -2,6 +2,7 @@ package com.wemade.domain;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class AnalysisStatistics {
     private long totalRequests;
@@ -9,25 +10,28 @@ public class AnalysisStatistics {
     private long redirect3xx;
     private long clientError4xx;
     private long serverError5xx;
-    private final Map<String, Long> ip = new HashMap<>();
-    private final Map<String, Long> path = new HashMap<>();
-    private final Map<Integer, Long> status = new HashMap<>();
+
+    private final Map<String, Long> ipCounts = new ConcurrentHashMap<>();
+    private final Map<String, Long> pathCounts = new ConcurrentHashMap<>();
+    private final Map<Integer, Long> statusCounts = new ConcurrentHashMap<>();
 
     public void incrementIp(String value) {
         if (value == null || value.isBlank()) return;
-        ip.merge(value, 1L, Long::sum);
+        ipCounts.merge(value.trim(), 1L, Long::sum);
     }
 
     public void incrementPath(String value) {
         if (value == null || value.isBlank()) return;
-        path.merge(value, 1L, Long::sum);
+        pathCounts.merge(value.trim(), 1L, Long::sum);
     }
 
     public void incrementStatus(int value) {
-        status.merge(value, 1L, Long::sum);
+        statusCounts.merge(value, 1L, Long::sum);
     }
 
     public void incrementStatusGroup(int statusCode) {
+        if (statusCode < 100 || statusCode >= 600) return;
+
         int group = statusCode / 100;
         if (group == 2) success2xx++;
         else if (group == 3) redirect3xx++;
@@ -46,7 +50,7 @@ public class AnalysisStatistics {
     public long getClientError4xx() { return clientError4xx; }
     public long getServerError5xx() { return serverError5xx; }
 
-    public Map<String, Long> getIp() { return ip; }
-    public Map<String, Long> getPath() { return path; }
-    public Map<Integer, Long> getStatus() { return status; }
+    public Map<String, Long> getIpCounts() { return ipCounts; }
+    public Map<String, Long> getPathCounts() { return pathCounts; }
+    public Map<Integer, Long> getStatusCounts() { return statusCounts; }
 }

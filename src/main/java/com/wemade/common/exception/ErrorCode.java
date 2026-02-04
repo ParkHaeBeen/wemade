@@ -7,7 +7,9 @@ public enum ErrorCode {
 
     PARSE_LINE_EXCEEDED("too many lines (max 200k lines)"),
     PARSE_FAILED("failed to parse line"),
-    PARSE_INVALID_FORMAT("invalid format");
+    PARSE_INVALID_FORMAT("invalid format"),
+
+    NOT_FOUND("not found");
 
     private final String message;
 

@@ -24,7 +24,10 @@ public class AnalysisController {
     return analysisService.create(file);
   }
   @GetMapping("/{analysisId}")
-  public AnalysisReadResponse read(@PathVariable String analysisId) {
-    return analysisService.read(analysisId);
+  public AnalysisReadResponse read(
+          @PathVariable String analysisId,
+          @RequestParam(defaultValue = "5") Integer topN
+  ) {
+    return analysisService.read(analysisId, topN);
   }
 }
