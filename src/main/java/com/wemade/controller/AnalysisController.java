@@ -30,4 +30,5 @@ public class AnalysisController {
   ) {
     return analysisService.read(analysisId, topN);
   }
+
 }

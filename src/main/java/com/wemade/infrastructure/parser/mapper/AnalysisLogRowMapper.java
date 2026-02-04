@@ -19,7 +19,7 @@ public class AnalysisLogRowMapper {
                 record.get("HttpMethod"),
                 record.get("RequestUri"),
                 record.get("UserAgent"),
-                Integer.parseInt(record.get("HttpStatus")),
+                record.get("HttpStatus"),
                 record.get("HttpVersion"),
                 record.get("ReceivedBytes"),
                 record.get("SentBytes"),

@@ -6,7 +6,7 @@ public record AnalysisLogRow(
         String httpMethod,
         String requestUri,
         String userAgent,
-        int httpStatus,
+        String httpStatus,
         String httpVersion,
         String receivedBytes,
         String sentBytes,

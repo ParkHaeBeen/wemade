@@ -26,9 +26,9 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponse(errorCode.name(), e.getMessage()));
     }
 
-    @ExceptionHandler(Exception.class)
+/*    @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleUnknown(Exception e) {
         return ResponseEntity.status(INTERNAL_SERVER_ERROR)
                 .body(new ErrorResponse("INTERNAL_SERVER_ERROR", "unexpected server error"));
-    }
+    }*/
 }
