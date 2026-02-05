@@ -18,7 +18,6 @@ public class ClientFallbackLoggingAspect {
         Object[] args = pjp.getArgs();
 
         String ip = "-";
-        String apiType = pjp.getSignature().getName();
 
         for (Object arg : args) {
             if (arg instanceof String ipArg) ip = ipArg;
@@ -27,7 +26,7 @@ public class ClientFallbackLoggingAspect {
         try {
             return pjp.proceed();
         } catch (Exception e) {
-            log.warn("event=ipinfo_fallback_failed type={} ip={} message={}", apiType, ip, e.getMessage(), e);
+            log.warn("event=ipinfo_fallback_failed ip={} message={}", ip, e.getMessage(), e);
             throw e;
         }
     }
