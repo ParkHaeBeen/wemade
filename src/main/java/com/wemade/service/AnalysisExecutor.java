@@ -11,8 +11,6 @@ import com.wemade.infrastructure.parser.dto.ParsedLogLine;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,7 +19,6 @@ import java.nio.charset.StandardCharsets;
 
 @Component
 public class AnalysisExecutor {
-    private static final Logger log = LoggerFactory.getLogger(AnalysisExecutor.class);
     private static final long MAX_LINES = 200_000;
 
     private final AnalysisParser parser;

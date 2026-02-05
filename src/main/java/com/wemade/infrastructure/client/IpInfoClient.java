@@ -1,5 +1,6 @@
 package com.wemade.infrastructure.client;
 
+import com.wemade.common.aop.ClientFallbackLogging;
 import com.wemade.infrastructure.client.dto.IpInfoApiAsnResponse;
 import com.wemade.infrastructure.client.dto.IpInfoApiGeoResponse;
 import org.springframework.retry.annotation.Backoff;
@@ -30,6 +31,7 @@ public class IpInfoClient {
     }
 
     @Recover
+    @ClientFallbackLogging
     public IpInfoApiAsnResponse recoverAsn(Exception e, String ip) {
         return IpInfoApiAsnResponse.unknown(ip);
     }
@@ -44,6 +46,7 @@ public class IpInfoClient {
     }
 
     @Recover
+    @ClientFallbackLogging
     public IpInfoApiGeoResponse recoverGeo(Exception e, String ip) {
         return IpInfoApiGeoResponse.unknown();
     }
