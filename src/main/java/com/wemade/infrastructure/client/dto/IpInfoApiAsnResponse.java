@@ -8,4 +8,7 @@ public record IpInfoApiAsnResponse(
         @JsonProperty("as_domain")
         String asDomain
 ) {
+   public static IpInfoApiAsnResponse unknown(String ip) {
+           return new IpInfoApiAsnResponse(ip, "UNKNOWN", "UNKNOWN");
+   }
 }

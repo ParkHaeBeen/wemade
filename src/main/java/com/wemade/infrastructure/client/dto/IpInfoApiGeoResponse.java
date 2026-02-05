@@ -5,4 +5,7 @@ public record IpInfoApiGeoResponse(
         String country,
         String region
 ) {
+    public static IpInfoApiGeoResponse unknown() {
+        return new IpInfoApiGeoResponse("UNKNOWN", "UNKNOWN", "UNKNOWN");
+    }
 }
