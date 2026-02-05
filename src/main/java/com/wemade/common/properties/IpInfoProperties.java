@@ -6,6 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public record IpInfoProperties(
         String token,
         String geoUrl,
-        String liteUrl
+        String liteUrl,
+        Integer readTimeout
 ) {
 }

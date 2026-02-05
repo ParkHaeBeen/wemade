@@ -5,7 +5,6 @@ import com.wemade.controller.dto.AnalysisTopIpInfoResponse;
 import com.wemade.controller.dto.AnalysisTopItem;
 import com.wemade.domain.Analysis;
 import com.wemade.domain.AnalysisStatistics;
-import com.wemade.domain.IpInfo;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;

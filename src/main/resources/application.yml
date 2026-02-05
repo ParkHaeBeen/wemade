@@ -8,3 +8,4 @@ ipinfo:
   lite-url: https://api.ipinfo.io
   token: ec2e0de10eeaea
   geo-url: https://ipinfo.io
+  read-timeout: 1500
