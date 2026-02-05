@@ -12,9 +12,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Aspect
 @Component
-public class LoggingAspect {
+public class AnalysisLoggingAspect {
 
-    private static final Logger log = LoggerFactory.getLogger(LoggingAspect.class);
+    private static final Logger log = LoggerFactory.getLogger(AnalysisLoggingAspect.class);
 
     @Around("@annotation(com.wemade.common.aop.AnalysisLogging)")
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
@@ -24,8 +24,8 @@ public class LoggingAspect {
         Analysis analysis = null;
 
         for (Object arg : args) {
-            if (arg instanceof MultipartFile f) file = f;
-            if (arg instanceof Analysis a) analysis = a;
+            if (arg instanceof MultipartFile fileArg) file = fileArg;
+            if (arg instanceof Analysis analysisArg) analysis = analysisArg;
         }
 
         String analysisId = (analysis == null) ? "-" : analysis.getId();
